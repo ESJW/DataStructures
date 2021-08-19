@@ -14,6 +14,9 @@ int main() {
 	Node* newNode = NULL;
 	int readData;
 
+	head = (Node*)malloc(sizeof(Node));		// 더미 노드 추가
+	tail = head;
+
 	// 데이터 입력 //
 	while (1) {
 		printf("자연수 입력: ");
@@ -26,24 +29,19 @@ int main() {
 		newNode->data = readData;
 		newNode->next = NULL;
 
-		if (head == NULL)
-			head = newNode;
-		else
-			tail->next = newNode;
-
+		tail->next = newNode;
 		tail = newNode;
 	}
 	printf("\n");
 
 	// 데이터 출력 //
 	printf("입력 받은 데이터의 전체출력! \n");
-	if (head == NULL)
+	if (head == tail)
 		printf("저장된 자연수가 존재하지 않습니다.\n");
 	else {
 		cur = head;
-		printf("%d ", cur->data);		// 첫 번째 데이터 출력
 
-		while (cur->next != NULL) {		// 두 번째 이후의 데이터 출력
+		while (cur->next != NULL) {
 			cur = cur->next;
 			printf("%d ", cur->data);
 		}
@@ -57,10 +55,7 @@ int main() {
 		Node* delNode = head;
 		Node* delNextNode = head->next;
 
-		printf("%d을(를) 삭제합니다.\n", head->data);
-		free(delNode);		// 첫 번째 노드 삭제
-
-		while (delNextNode != NULL) {	// 두 번째 이후 노드 삭제
+		while (delNextNode != NULL) {	// dummy 노드 빼고 삭제
 			delNode = delNextNode;
 			delNextNode = delNextNode->next;
 
